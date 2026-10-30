@@ -1,0 +1,316 @@
+﻿@{
+    ViewData["Title"] = "CloudX";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CloudX — Cloud Intelligence Platform</title>
+
+    <link rel="stylesheet" href="~/css/Start/start.css" asp-append-version="true" />
+</head>
+
+<body>
+
+    <div class="background">
+        <div class="orb orb-blue"></div>
+        <div class="orb orb-violet"></div>
+        <div class="orb orb-cyan"></div>
+        <div class="orb orb-pink"></div>
+
+        <div class="shape shape-one"></div>
+        <div class="shape shape-two"></div>
+        <div class="shape shape-three"></div>
+
+        <div class="grid"></div>
+    </div>
+
+    <header class="navbar">
+        <a href="/" class="brand">
+            <span class="brand-mark">
+                <span></span>
+                <span></span>
+                <span></span>
+            </span>
+            <span class="brand-name">Cloud<span>X</span></span>
+        </a>
+
+        <nav class="nav-links">
+            <a href="#platform">Platform</a>
+            <a href="#capabilities">Capabilities</a>
+            <a href="#security">Security</a>
+        </nav>
+
+        <a href="/LogReg/Login" class="nav-login">
+            Login
+            <span>→</span>
+        </a>
+    </header>
+
+    <main>
+
+        <section class="hero">
+
+            <div class="hero-copy">
+
+                <div class="eyebrow">
+                    <span class="pulse"></span>
+                    Built for Microsoft Azure
+                </div>
+
+                <h1>
+                    See your cloud
+                    <span>clearly.</span>
+                </h1>
+
+                <p class="hero-text">
+                    CloudX is an Azure-focused cloud intelligence platform that
+                    brings infrastructure discovery, cost intelligence and
+                    security monitoring into one focused experience.
+                    Understand your Azure environment before it becomes a problem.
+                </p>
+
+                <div class="hero-actions">
+                    <a href="/LogReg/Login" class="primary-button">
+                        Get started
+                        <span>→</span>
+                    </a>
+
+                    <a href="#platform" class="secondary-button">
+                        Explore CloudX
+                    </a>
+                </div>
+
+                <div class="trust-row">
+                    <div class="trust-item">
+                        <strong>01</strong>
+                        <span>Discover</span>
+                    </div>
+
+                    <div class="trust-line"></div>
+
+                    <div class="trust-item">
+                        <strong>02</strong>
+                        <span>Understand</span>
+                    </div>
+
+                    <div class="trust-line"></div>
+
+                    <div class="trust-item">
+                        <strong>03</strong>
+                        <span>Optimize</span>
+                    </div>
+
+                    <div class="azure-mini-badge">
+                        <span class="azure-mark">▦</span>
+                        Azure focused
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="hero-visual">
+
+                <div class="visual-glow"></div>
+
+                <div class="dashboard-card">
+
+                    <div class="dashboard-top">
+                        <div>
+                            <span class="mini-label">CLOUDX OVERVIEW</span>
+                            <h3>Cloud intelligence</h3>
+                        </div>
+
+                        <div class="status">
+                            <span></span>
+                            Connected
+                        </div>
+                    </div>
+
+                    <div class="metric-grid">
+
+                        <div class="metric-card">
+                            <span class="metric-icon">◈</span>
+                            <span class="metric-label">Resources</span>
+                            <strong>247</strong>
+                            <small>Across 12 services</small>
+                        </div>
+
+                        <div class="metric-card">
+                            <span class="metric-icon">⌁</span>
+                            <span class="metric-label">Monthly cost</span>
+                            <strong>$4,284</strong>
+                            <small class="positive">↓ 8.4% this month</small>
+                        </div>
+
+                        <div class="metric-card">
+                            <span class="metric-icon">✓</span>
+                            <span class="metric-label">Security score</span>
+                            <strong>92%</strong>
+                            <small>Good standing</small>
+                        </div>
+
+                        <div class="metric-card">
+                            <span class="metric-icon">$</span>
+                            <span class="metric-label">Potential savings</span>
+                            <strong>$736</strong>
+                            <small>Optimization found</small>
+                        </div>
+
+                    </div>
+
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <div>
+                                <span class="metric-label">COST TREND</span>
+                                <strong>Cloud spending</strong>
+                            </div>
+
+                            <span class="chart-period">Last 30 days</span>
+                        </div>
+
+                        <div class="chart">
+                            <div class="chart-grid-line line-one"></div>
+                            <div class="chart-grid-line line-two"></div>
+                            <div class="chart-grid-line line-three"></div>
+
+                            <svg viewBox="0 0 560 170" preserveAspectRatio="none" aria-hidden="true">
+                                <defs>
+                                    <linearGradient id="areaFill" x1="0" x2="0" y1="0" y2="1">
+                                        <stop offset="0%" stop-opacity=".24" />
+                                        <stop offset="100%" stop-opacity="0" />
+                                    </linearGradient>
+                                </defs>
+
+                                <path class="area"
+                                      d="M0,135 C45,122 55,104 95,112 C132,120 145,91 183,98 C222,105 236,70 274,82 C312,94 325,53 365,65 C402,76 419,42 451,52 C490,65 512,31 560,42 L560,170 L0,170 Z" />
+
+                                <path class="line"
+                                      d="M0,135 C45,122 55,104 95,112 C132,120 145,91 183,98 C222,105 236,70 274,82 C312,94 325,53 365,65 C402,76 419,42 451,52 C490,65 512,31 560,42" />
+                            </svg>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="floating-card floating-security">
+                    <span class="floating-icon">✓</span>
+                    <div>
+                        <strong>Security healthy</strong>
+                        <small>0 critical issues</small>
+                    </div>
+                </div>
+
+                <div class="floating-card floating-cost">
+                    <span class="floating-icon">$</span>
+                    <div>
+                        <strong>Save $736</strong>
+                        <small>Optimization opportunity</small>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="azure-strip">
+            <div class="azure-strip-icon">▦</div>
+            <div>
+                <span class="section-kicker">AZURE FIRST</span>
+                <strong>One focused view of your Microsoft Azure environment.</strong>
+            </div>
+            <div class="azure-services">
+                <span>Resources</span>
+                <span>Costs</span>
+                <span>Security</span>
+            </div>
+        </section>
+
+
+        <section class="capabilities" id="platform">
+
+            <div class="section-heading">
+                <span class="section-kicker">ONE PLATFORM</span>
+                <h2>Everything important.<br />In one view.</h2>
+                <p>
+                    Stop switching between cloud consoles and spreadsheets.
+                    CloudX gives your infrastructure a single operational view.
+                </p>
+            </div>
+
+            <div class="feature-grid" id="capabilities">
+
+                <article class="feature-card">
+                    <div class="feature-number">01</div>
+                    <div class="feature-icon blue">◈</div>
+                    <h3>Cloud Discovery</h3>
+                    <p>
+                        Discover resources, services and infrastructure relationships
+                        across your connected cloud environment.
+                    </p>
+                    <div class="feature-link">Azure resource visibility <span>→</span></div>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-number">02</div>
+                    <div class="feature-icon violet">$</div>
+                    <h3>Cost Intelligence</h3>
+                    <p>
+                        Understand spending, identify anomalies and uncover
+                        unused or underutilized resources.
+                    </p>
+                    <div class="feature-link">Azure cost intelligence <span>→</span></div>
+                </article>
+
+                <article class="feature-card" id="security">
+                    <div class="feature-number">03</div>
+                    <div class="feature-icon cyan">✓</div>
+                    <h3>Security Monitoring</h3>
+                    <p>
+                        Surface cloud exposure and configuration risks through
+                        a focused security monitoring experience.
+                    </p>
+                    <div class="feature-link">Azure security monitoring <span>→</span></div>
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <section class="bottom-cta">
+
+            <div>
+                <span class="section-kicker">READY WHEN YOU ARE</span>
+                <h2>Bring your cloud into focus.</h2>
+                <p>Connect your Microsoft Azure environment and start understanding it from one place.</p>
+            </div>
+
+            <a href="/LogReg/Login" class="primary-button">
+                Enter CloudX
+                <span>→</span>
+            </a>
+
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <div class="brand footer-brand">
+            <span class="brand-mark">
+                <span></span>
+                <span></span>
+                <span></span>
+            </span>
+            <span class="brand-name">Cloud<span>X</span></span>
+        </div>
+
+        <span>Cloud intelligence platform · 2026</span>
+    </footer>
+
+</body>
+</html>

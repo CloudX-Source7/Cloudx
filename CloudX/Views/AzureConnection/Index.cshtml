@@ -1,0 +1,162 @@
+﻿@model CloudX.AzureConnection.DTOs.AzureConnectionPageViewModel
+
+@{
+    ViewData["Title"] = "Azure Connections";
+}
+
+<div class="container py-5">
+    <div class="mb-4">
+        <h2 class="fw-bold">Azure Connections</h2>
+        <p class="text-secondary">
+            Connect your Microsoft Azure account and choose a subscription
+            for CloudX security monitoring.
+        </p>
+    </div>
+
+    @if (TempData["SuccessMessage"] is string success)
+    {
+        <div class="alert alert-success">@success</div>
+    }
+
+    @if (TempData["ErrorMessage"] is string error)
+    {
+        <div class="alert alert-danger">@error</div>
+    }
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body p-4">
+            <h5 class="fw-semibold">Microsoft Azure authorization</h5>
+
+            @if (Model.IsAzureAuthorized)
+            {
+                <p class="text-success mb-2">
+                    <strong>Azure account connected</strong>
+                </p>
+
+                @if (!string.IsNullOrWhiteSpace(Model.TenantId))
+                {
+                    <p class="text-secondary small">
+                        Tenant ID:
+                        <code>@Model.TenantId</code>
+                    </p>
+                }
+            }
+            else
+            {
+                <p class="text-secondary">
+                    Authorize CloudX to access your Azure account.
+                </p>
+            }
+
+            <a asp-controller="AzureConnection"
+               asp-action="Connect"
+               class="btn btn-primary">
+                @(Model.IsAzureAuthorized
+                    ? "Connect Another Azure Account"
+                    : "Connect Microsoft Azure")
+            </a>
+        </div>
+    </div>
+
+    @if (Model.IsAzureAuthorized)
+    {
+        <div class="card shadow-sm mb-4">
+            <div class="card-body p-4">
+                <h5 class="fw-semibold">Add a subscription</h5>
+                <p class="text-secondary">
+                    Enter the subscription ID you want CloudX to validate
+                    and save.
+                </p>
+
+                <form asp-controller="AzureConnection"
+                      asp-action="AddSubscription"
+                      method="post">
+
+                    @Html.AntiForgeryToken()
+
+                    <div class="mb-3">
+                        <label for="subscriptionId" class="form-label">
+                            Azure Subscription ID
+                        </label>
+
+                        <input id="subscriptionId"
+                               name="subscriptionId"
+                               type="text"
+                               class="form-control"
+                               placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                               required />
+
+                        <div class="form-text">
+                            Use the subscription ID from the Azure portal.
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-outline-primary">
+                        Validate and Add Subscription
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <h5 class="fw-semibold mb-1">Saved subscriptions</h5>
+                <p class="text-secondary mb-4">
+                    Select a saved subscription to continue.
+                </p>
+
+                @if (Model.Connections == null ||
+                     !Model.Connections.Any())
+                {
+                    <div class="text-center py-4">
+                        <h6>No subscriptions saved yet</h6>
+                        <p class="text-secondary mb-0">
+                            Add a subscription above to get started.
+                        </p>
+                    </div>
+                }
+                else
+                {
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead>
+                                <tr>
+                                    <th>Subscription ID</th>
+                                    <th class="text-end">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var connection in Model.Connections)
+                                {
+                                    <tr>
+                                        <td>
+                                            <code>@connection.SubscriptionId</code>
+                                        </td>
+                                        <td class="text-end">
+                                            <form asp-controller="AzureConnection"
+                                                  asp-action="SelectSubscription"
+                                                  method="post"
+                                                  class="d-inline">
+
+                                                @Html.AntiForgeryToken()
+
+                                                <input type="hidden"
+                                                       name="subscriptionId"
+                                                       value="@connection.SubscriptionId" />
+
+                                                <button type="submit"
+                                                        class="btn btn-primary btn-sm">
+                                                    Continue with this ID
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>

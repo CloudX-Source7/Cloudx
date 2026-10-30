@@ -1,0 +1,549 @@
+﻿/* ============================================================
+   CLOUDX SECURITY MONITORING
+   Azure-inspired professional UI
+   ============================================================ */
+
+:root {
+    --cloudx-blue: #0078d4;
+    --cloudx-blue-dark: #005a9e;
+    --cloudx-navy: #0f172a;
+    --cloudx-navy-light: #1e293b;
+    --cloudx-bg: #f3f6fa;
+    --cloudx-card: #ffffff;
+    --cloudx-text: #172033;
+    --cloudx-muted: #64748b;
+    --cloudx-border: #dbe3ec;
+    --cloudx-danger: #d13438;
+    --cloudx-danger-bg: #fff1f2;
+    --cloudx-success: #107c10;
+    --cloudx-success-bg: #effcf0;
+    --cloudx-warning: #ca5010;
+    --cloudx-warning-bg: #fff7ed;
+    --cloudx-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+    --cloudx-radius: 14px;
+}
+
+
+/* ============================================================
+   PAGE
+   ============================================================ */
+
+.security-page {
+    min-height: 100vh;
+    background: var(--cloudx-bg);
+    padding: 40px 20px 70px;
+    color: var(--cloudx-text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+
+/* ============================================================
+   PAGE HEADER
+   ============================================================ */
+
+.security-header {
+    max-width: 1180px;
+    margin: 0 auto 30px;
+    background: linear-gradient( 135deg, #0f172a 0%, #172554 50%, #0078d4 100% );
+    color: white;
+    padding: 32px 36px;
+    border-radius: 18px;
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.18);
+}
+
+.security-header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.security-header h1 {
+    margin: 0;
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.security-header p {
+    margin: 8px 0 0;
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 15px;
+}
+
+.security-header-icon {
+    width: 54px;
+    height: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.12);
+    font-size: 27px;
+}
+
+
+/* ============================================================
+   NO RISK
+   ============================================================ */
+
+.no-security-risk {
+    max-width: 1180px;
+    margin: 0 auto;
+    background: var(--cloudx-card);
+    border: 1px solid #cde8d0;
+    border-left: 5px solid var(--cloudx-success);
+    border-radius: var(--cloudx-radius);
+    padding: 28px 30px;
+    box-shadow: var(--cloudx-shadow);
+}
+
+.no-security-risk-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.no-security-risk-icon {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--cloudx-success-bg);
+    font-size: 22px;
+}
+
+.no-security-risk h2 {
+    margin: 0;
+    font-size: 21px;
+    color: var(--cloudx-success);
+}
+
+.no-security-risk p {
+    margin: 12px 0 0;
+    color: var(--cloudx-muted);
+    line-height: 1.6;
+}
+
+
+/* ============================================================
+   FINDING CARD
+   ============================================================ */
+
+.security-finding {
+    max-width: 1180px;
+    margin: 0 auto 30px;
+    background: var(--cloudx-card);
+    border: 1px solid var(--cloudx-border);
+    border-radius: var(--cloudx-radius);
+    overflow: hidden;
+    box-shadow: var(--cloudx-shadow);
+}
+
+
+/* ============================================================
+   FINDING HEADER
+   ============================================================ */
+
+.finding-header {
+    padding: 24px 28px;
+    background: linear-gradient( 135deg, #fff7f7, #ffffff );
+    border-bottom: 1px solid var(--cloudx-border);
+    border-left: 5px solid var(--cloudx-danger);
+}
+
+.finding-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: var(--cloudx-danger-bg);
+    color: var(--cloudx-danger);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.finding-header h2 {
+    margin: 14px 0 0;
+    font-size: 23px;
+    line-height: 1.35;
+    color: var(--cloudx-text);
+}
+
+
+/* ============================================================
+   FINDING BODY
+   ============================================================ */
+
+.finding-body {
+    padding: 28px;
+}
+
+
+/* ============================================================
+   METADATA
+   ============================================================ */
+
+.finding-meta {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 26px;
+}
+
+.meta-item {
+    padding: 16px;
+    background: #f8fafc;
+    border: 1px solid var(--cloudx-border);
+    border-radius: 10px;
+    min-width: 0;
+}
+
+.meta-label {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--cloudx-muted);
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.meta-value {
+    display: block;
+    color: var(--cloudx-text);
+    font-size: 14px;
+    font-weight: 600;
+    word-break: break-word;
+}
+
+
+/* ============================================================
+   SEVERITY
+   ============================================================ */
+
+.severity-badge {
+    display: inline-flex;
+    padding: 5px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+
+/* ============================================================
+   INFORMATION SECTIONS
+   ============================================================ */
+
+.finding-section {
+    margin-top: 22px;
+}
+
+.finding-section-title {
+    margin-bottom: 9px;
+    color: var(--cloudx-text);
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.finding-section-content {
+    color: #475569;
+    font-size: 14px;
+    line-height: 1.7;
+    white-space: pre-wrap;
+}
+
+
+/* ============================================================
+   AI PANEL
+   ============================================================ */
+
+.cloudx-ai {
+    margin-top: 30px;
+    border: 1px solid #cbd5e1;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #ffffff;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+}
+
+
+/* ============================================================
+   AI HEADER
+   ============================================================ */
+
+.ai-header {
+    padding: 20px 22px;
+    background: linear-gradient( 135deg, #0f172a, #1e3a8a, #0078d4 );
+    color: white;
+}
+
+.ai-header-content {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+
+.ai-icon {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.13);
+    border-radius: 11px;
+    font-size: 21px;
+}
+
+.ai-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.ai-header p {
+    margin: 4px 0 0;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 13px;
+}
+
+
+/* ============================================================
+   AI CHAT
+   ============================================================ */
+
+.ai-chat-container {
+    padding: 20px;
+}
+
+.ai-chat-history {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.ai-message {
+    padding: 13px 15px;
+    border-radius: 10px;
+    font-size: 14px;
+    line-height: 1.65;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.ai-user-message {
+    align-self: flex-end;
+    max-width: 80%;
+    background: #e8f3fc;
+    border: 1px solid #c7e3f8;
+    color: #17324d;
+}
+
+.ai-assistant-message {
+    align-self: flex-start;
+    max-width: 90%;
+    background: #f8fafc;
+    border: 1px solid var(--cloudx-border);
+    color: #334155;
+}
+
+.ai-message-title {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--cloudx-blue);
+}
+
+
+/* ============================================================
+   AI INPUT
+   ============================================================ */
+
+.ai-input-area {
+    display: flex;
+    gap: 12px;
+    align-items: flex-end;
+}
+
+.ai-question {
+    flex: 1;
+    min-height: 58px;
+    resize: vertical;
+    padding: 13px 15px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    background: #ffffff;
+    color: var(--cloudx-text);
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+    .ai-question:focus {
+        border-color: var(--cloudx-blue);
+        box-shadow: 0 0 0 3px rgba(0, 120, 212, 0.12);
+    }
+
+    .ai-question::placeholder {
+        color: #94a3b8;
+    }
+
+
+/* ============================================================
+   AI BUTTON
+   ============================================================ */
+
+.ask-ai-button {
+    min-height: 58px;
+    padding: 0 22px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient( 135deg, #0078d4, #106ebe );
+    color: white;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 5px 14px rgba(0, 120, 212, 0.22);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+}
+
+    .ask-ai-button:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 8px 18px rgba(0, 120, 212, 0.28);
+    }
+
+    .ask-ai-button:active {
+        transform: translateY(0);
+    }
+
+    .ask-ai-button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+    }
+
+
+/* ============================================================
+   AI LOADING
+   ============================================================ */
+
+.ai-loading {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+    color: var(--cloudx-muted);
+    font-size: 13px;
+}
+
+    .ai-loading::before {
+        content: "";
+        width: 14px;
+        height: 14px;
+        border: 2px solid #dbeafe;
+        border-top-color: var(--cloudx-blue);
+        border-radius: 50%;
+        animation: cloudx-spin 0.8s linear infinite;
+    }
+
+@keyframes cloudx-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* ============================================================
+   AI ERROR
+   ============================================================ */
+
+.ai-error {
+    margin-top: 12px;
+    padding: 12px 14px;
+    border-radius: 9px;
+    background: var(--cloudx-danger-bg);
+    border: 1px solid #fecdd3;
+    color: #991b1b;
+    font-size: 13px;
+}
+
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 900px) {
+
+    .finding-meta {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .security-header {
+        padding: 28px;
+    }
+
+    .finding-body {
+        padding: 22px;
+    }
+}
+
+
+@media (max-width: 650px) {
+
+    .security-page {
+        padding: 20px 12px 50px;
+    }
+
+    .security-header {
+        padding: 23px 20px;
+        border-radius: 13px;
+    }
+
+        .security-header h1 {
+            font-size: 24px;
+        }
+
+    .security-header-icon {
+        display: none;
+    }
+
+    .finding-meta {
+        grid-template-columns: 1fr;
+    }
+
+    .finding-header {
+        padding: 20px;
+    }
+
+        .finding-header h2 {
+            font-size: 19px;
+        }
+
+    .finding-body {
+        padding: 18px;
+    }
+
+    .ai-input-area {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .ask-ai-button {
+        width: 100%;
+    }
+
+    .ai-user-message,
+    .ai-assistant-message {
+        max-width: 100%;
+    }
+}

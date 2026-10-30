@@ -1,0 +1,36 @@
+[
+  {
+    "Id": "DB-001",
+    "Name": "Configure SQL Server Private Endpoint",
+    "SupportedRuleIds": [
+      "SqlPrivateEndpoint"
+    ],
+    "ResourceTypes": [
+      "Microsoft.Sql/servers"
+    ],
+    "Description": "The Azure SQL Server does not have an approved private endpoint connection. Configure and approve a private endpoint, including private DNS and network connectivity.",
+    "CommandTemplate": "",
+    "RequiredParameters": [],
+    "ImpactWarning": "Private endpoint creation requires selecting a suitable virtual network, subnet, DNS configuration and connection approval. These values are environment-specific, so a generic CLI command is not generated.",
+    "RequiresApproval": true
+  },
+  {
+    "Id": "DB-002",
+    "Name": "Enforce Storage Account SAS Expiration Policy",
+    "SupportedRuleIds": [
+      "StorageSharedAccessSignatureExpiry"
+    ],
+    "ResourceTypes": [
+      "Microsoft.Storage/storageAccounts"
+    ],
+    "Description": "The Storage Account does not enforce a valid SAS expiration policy. Configure an expiration period and set the expiration action to Block.",
+    "CommandTemplate": "az storage account update --name {accountName} --resource-group {resourceGroup} --sas-expiration-period {expirationPeriod} --sas-expiration-action Block",
+    "RequiredParameters": [
+      "accountName",
+      "resourceGroup",
+      "expirationPeriod"
+    ],
+    "ImpactWarning": "SAS tokens that exceed the configured expiration period may be blocked. Review applications, integrations and existing SAS token usage before applying.",
+    "RequiresApproval": true
+  }
+]

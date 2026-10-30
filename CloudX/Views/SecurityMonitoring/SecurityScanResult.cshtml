@@ -1,0 +1,581 @@
+﻿@model List<CloudX.SecurityMonitoring.Dto.SecurityFindingDto>
+
+@{
+    ViewData["Title"] = "Security Scan Results";
+}
+
+<link rel="stylesheet"
+      href="~/css/SecurityMonitoring/securityscanresult.css" />
+
+@Html.AntiForgeryToken()
+
+<div class="security-page">
+    <div class="security-header">
+        <div class="security-header-top">
+            <div>
+                <h1>CloudX Security Monitoring</h1>
+                <p>Security findings and catalog-based remediation.</p>
+            </div>
+            <div class="security-header-icon">🛡️</div>
+        </div>
+    </div>
+
+    @if (Model is null || Model.Count == 0)
+    {
+        <div class="no-security-risk">
+            <h2>No Security Risks</h2>
+            <p>No findings were supplied to this page.</p>
+        </div>
+    }
+    else
+    {
+        @foreach (var finding in Model)
+        {
+            <section class="security-finding remediation-card">
+
+                <div class="finding-header">
+                    <span class="finding-status">
+                        🔴 Security Risk Found
+                    </span>
+                    <h2>@finding.Title</h2>
+                </div>
+
+                <div class="finding-body">
+
+                    <div class="finding-meta">
+                        <div class="meta-item">
+                            <span class="meta-label">Resource</span>
+                            <span class="meta-value">@finding.ResourceName</span>
+                        </div>
+
+                        <div class="meta-item">
+                            <span class="meta-label">Resource Type</span>
+                            <span class="meta-value">@finding.ResourceType</span>
+                        </div>
+
+                        <div class="meta-item">
+                            <span class="meta-label">Category</span>
+                            <span class="meta-value">@finding.Category</span>
+                        </div>
+
+                        <div class="meta-item">
+                            <span class="meta-label">Rule</span>
+                            <span class="meta-value">@finding.Rule</span>
+                        </div>
+
+                        <div class="meta-item">
+                            <span class="meta-label">Severity</span>
+                            <span class="meta-value">@finding.Severity</span>
+                        </div>
+
+                        <div class="meta-item">
+                            <span class="meta-label">Detected At</span>
+                            <span class="meta-value">@finding.DetectedAt</span>
+                        </div>
+                    </div>
+
+                    <div class="finding-section">
+                        <div class="finding-section-title">
+                            Security Description
+                        </div>
+                        <div class="finding-section-content">
+                            @finding.Description
+                        </div>
+                    </div>
+
+                    <div class="finding-section">
+                        <div class="finding-section-title">
+                            Scanner Recommendation
+                        </div>
+                        <div class="finding-section-content">
+                            @finding.Recommendation
+                        </div>
+                    </div>
+
+                    <div class="finding-section catalog-remediation">
+
+                        <div class="finding-section-title">
+                            CloudX Catalog Remediation
+                        </div>
+
+                        <p>
+                            Find the matching remediation from the six JSON
+                            catalogs and validate its CLI template.
+                        </p>
+
+                        <button type="button"
+                                class="generate-remediation-button"
+                                onclick="generateCatalogCommand(this)">
+                            Generate Azure CLI Command
+                        </button>
+
+                        <p class="remediation-loading" style="display:none">
+                            Matching catalog and validating command...
+                        </p>
+
+                        <div class="remediation-output" style="display:none">
+
+                            <h3 class="remediation-name"></h3>
+
+                            <p class="remediation-description"></p>
+
+                            <p>
+                                <strong>Impact warning:</strong>
+                                <span class="remediation-warning"></span>
+                            </p>
+
+                            <p>
+                                <strong>Approval required:</strong>
+                                <span class="remediation-approval"></span>
+                            </p>
+
+                            <div class="remediation-message"
+                                 role="status"
+                                 aria-live="polite"></div>
+
+                            <div class="remediation-missing"
+                                 style="display:none">
+
+                                <strong>Required parameters</strong>
+
+                                <p>Enter the missing values to continue.</p>
+
+                                <form class="remediation-parameters-form">
+
+                                    <div class="remediation-parameter-fields">
+                                    </div>
+
+                                    <button type="submit"
+                                            class="generate-remediation-button">
+                                        Generate Command
+                                    </button>
+
+                                </form>
+                            </div>
+
+                            <div class="remediation-command-block"
+                                 style="display:none">
+
+                                <h4>Azure CLI Command</h4>
+
+                                <pre class="remediation-command"></pre>
+
+                                <p>
+                                    Review this command before running it.
+                                    CloudX does not execute remediation commands
+                                    automatically.
+                                </p>
+
+                                <button type="button"
+                                        class="copy-remediation-button"
+                                        onclick="copyCatalogCommand(this)">
+                                    Copy Command
+                                </button>
+                            </div>
+
+                            <div class="remediation-template-block"
+                                 style="display:none">
+
+                                <h4>Catalog Template</h4>
+
+                                <pre class="remediation-template"></pre>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="finding-data"
+                     hidden
+                     data-resource-id="@finding.ResourceId"
+                     data-resource-name="@finding.ResourceName"
+                     data-resource-type="@finding.ResourceType"
+                     data-category="@finding.Category"
+                     data-rule="@finding.Rule"
+                     data-severity="@finding.Severity"
+                     data-title="@finding.Title"
+                     data-description="@finding.Description"
+                     data-recommendation="@finding.Recommendation"
+                     data-configuration-version="@finding.ConfigurationVersion"
+                     data-detected-at="@finding.DetectedAt.ToString("O")">
+                </div>
+
+            </section>
+        }
+    }
+</div>
+
+<script>
+
+    // ==========================================
+    // 1. Generate CLI for selected finding
+    // ==========================================
+
+    async function generateCatalogCommand(button) {
+
+        const card = button.closest(".remediation-card");
+
+        const data = card.querySelector(".finding-data");
+        const output = card.querySelector(".remediation-output");
+        const loading = card.querySelector(".remediation-loading");
+
+        const tokenInput = document.querySelector(
+            'input[name="__RequestVerificationToken"]'
+        );
+
+        if (!tokenInput) {
+            alert("Anti-forgery token was not found.");
+            return;
+        }
+
+        const token = tokenInput.value;
+
+        const read = name => data.dataset[name] || "";
+
+        // Only the selected finding is sent.
+        const finding = {
+            resourceId: read("resourceId"),
+            resourceName: read("resourceName"),
+            resourceType: read("resourceType"),
+            category: read("category"),
+            rule: read("rule"),
+            severity: read("severity"),
+            title: read("title"),
+            description: read("description"),
+            recommendation: read("recommendation"),
+            configurationVersion: read("configurationVersion"),
+            detectedAt: read("detectedAt")
+        };
+
+        button.disabled = true;
+
+        loading.style.display = "block";
+        output.style.display = "none";
+
+        try {
+
+            await requestCommand(
+                card,
+                finding,
+                {},
+                token
+            );
+
+        } catch (error) {
+
+            resetOutput(card);
+
+            output.querySelector(".remediation-message").textContent =
+                error.message || "Unable to generate the command.";
+
+            output.style.display = "block";
+
+        } finally {
+
+            loading.style.display = "none";
+            button.disabled = false;
+
+        }
+    }
+
+
+    // ==========================================
+    // 2. Send request to RemediationController
+    // ==========================================
+
+    async function requestCommand(
+        card,
+        finding,
+        parameters,
+        token
+    ) {
+
+        const output = card.querySelector(".remediation-output");
+
+        const missingBlock = output.querySelector(
+            ".remediation-missing"
+        );
+
+        const fields = missingBlock.querySelector(
+            ".remediation-parameter-fields"
+        );
+
+        const commandBlock = output.querySelector(
+            ".remediation-command-block"
+        );
+
+        const templateBlock = output.querySelector(
+            ".remediation-template-block"
+        );
+
+        const message = output.querySelector(
+            ".remediation-message"
+        );
+
+        message.textContent = "";
+
+        const response = await fetch("/Remediation/GenerateCli", {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "RequestVerificationToken": token
+            },
+
+            body: JSON.stringify({
+                finding: finding,
+                parameters: parameters
+            })
+
+        });
+
+        // Read response as text first.
+        // This prevents JSON parsing errors on empty responses.
+
+        const responseText = await response.text();
+
+        let result = {};
+
+        if (responseText.trim()) {
+
+            try {
+
+                result = JSON.parse(responseText);
+
+            } catch {
+
+                throw new Error(
+                    `Invalid server response. HTTP ${response.status}. ` +
+                    responseText.substring(0, 300)
+                );
+
+            }
+
+        } else {
+
+            throw new Error(
+                `Server returned an empty response. HTTP ${response.status}. ` +
+                "Check the controller, anti-forgery validation and server logs."
+            );
+
+        }
+
+        if (!response.ok) {
+
+            throw new Error(
+                result.message ||
+                `Remediation request failed. HTTP ${response.status}.`
+            );
+
+        }
+
+        // ======================================
+        // 3. Display remediation information
+        // ======================================
+
+        output.querySelector(".remediation-name").textContent =
+            result.name || "No catalog entry";
+
+        output.querySelector(".remediation-description").textContent =
+            result.description || "";
+
+        output.querySelector(".remediation-warning").textContent =
+            result.impactWarning || "No impact warning supplied.";
+
+        output.querySelector(".remediation-approval").textContent =
+            result.requiresApproval === true ? "Yes" :
+                result.requiresApproval === false ? "No" : "Unknown";
+
+        message.textContent = result.message || "";
+
+        // Reset previous result blocks.
+
+        commandBlock.style.display = "none";
+        templateBlock.style.display = "none";
+        missingBlock.style.display = "none";
+
+        fields.replaceChildren();
+
+        output.querySelector(".remediation-command").textContent = "";
+        output.querySelector(".remediation-template").textContent = "";
+
+        // ======================================
+        // 4. Display catalog template
+        // ======================================
+
+        if (result.commandTemplate) {
+
+            output.querySelector(".remediation-template").textContent =
+                result.commandTemplate;
+
+            templateBlock.style.display = "block";
+
+        }
+
+        // ======================================
+        // 5. Request missing parameters
+        // ======================================
+
+        if (Array.isArray(result.missingParameters) &&
+            result.missingParameters.length > 0) {
+
+            for (const parameter of result.missingParameters) {
+
+                const label = document.createElement("label");
+
+                label.textContent = parameter;
+
+                const input = document.createElement("input");
+
+                input.type = "text";
+                input.name = parameter;
+                input.required = true;
+                input.autocomplete = "off";
+                input.maxLength = 256;
+
+                label.appendChild(input);
+
+                fields.appendChild(label);
+
+            }
+
+            const form = missingBlock.querySelector(
+                ".remediation-parameters-form"
+            );
+
+            form.onsubmit = async event => {
+
+                event.preventDefault();
+
+                if (!form.reportValidity()) {
+                    return;
+                }
+
+                const submitButton = form.querySelector(
+                    'button[type="submit"]'
+                );
+
+                const nextParameters = { ...parameters };
+
+                for (const input of fields.querySelectorAll("input")) {
+
+                    nextParameters[input.name] = input.value.trim();
+
+                }
+
+                submitButton.disabled = true;
+
+                try {
+
+                    await requestCommand(
+                        card,
+                        finding,
+                        nextParameters,
+                        token
+                    );
+
+                } catch (error) {
+
+                    message.textContent =
+                        error.message || "Unable to generate the command.";
+
+                } finally {
+
+                    submitButton.disabled = false;
+
+                }
+
+            };
+
+            missingBlock.style.display = "block";
+
+        }
+
+        // ======================================
+        // 6. Display generated CLI command
+        // ======================================
+
+        if (result.success && result.command) {
+
+            output.querySelector(".remediation-command").textContent =
+                result.command;
+
+            commandBlock.style.display = "block";
+
+        }
+
+        output.style.display = "block";
+
+    }
+
+
+    // ==========================================
+    // 7. Clear old remediation output
+    // ==========================================
+
+    function resetOutput(card) {
+
+        const output = card.querySelector(".remediation-output");
+
+        output.querySelector(".remediation-name").textContent = "";
+        output.querySelector(".remediation-description").textContent = "";
+        output.querySelector(".remediation-warning").textContent = "";
+        output.querySelector(".remediation-approval").textContent = "";
+
+        output.querySelector(".remediation-message").textContent = "";
+
+        output.querySelector(".remediation-command").textContent = "";
+        output.querySelector(".remediation-template").textContent = "";
+
+        output.querySelector(".remediation-missing").style.display = "none";
+        output.querySelector(".remediation-command-block").style.display = "none";
+        output.querySelector(".remediation-template-block").style.display = "none";
+
+        output.querySelector(".remediation-parameter-fields").replaceChildren();
+
+    }
+
+
+    // ==========================================
+    // 8. Copy generated command
+    // ==========================================
+
+    async function copyCatalogCommand(button) {
+
+        const card = button.closest(".remediation-card");
+
+        const command = card.querySelector(
+            ".remediation-command"
+        ).textContent;
+
+        if (!command.trim()) {
+            return;
+        }
+
+        try {
+
+            await navigator.clipboard.writeText(command);
+
+            const originalText = button.textContent;
+
+            button.textContent = "Copied ✓";
+
+            setTimeout(() => {
+
+                button.textContent = originalText;
+
+            }, 2000);
+
+        } catch {
+
+            alert(
+                "Unable to copy the command. Copy it manually."
+            );
+
+        }
+
+    }
+
+</script>

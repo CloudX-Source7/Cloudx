@@ -1,0 +1,167 @@
+[
+  {
+    "Id": "MIS-001",
+    "Name": "Create Azure Activity Log Alert",
+    "SupportedRuleIds": [ "ActivityLogAlertMissing" ],
+    "ResourceTypes": [ "Microsoft.Resources/subscriptions" ],
+    "Description": "The Azure subscription does not have an enabled Activity Log Alert. Create alerts for important administrative and subscription-level events.",
+    "CommandTemplate": "",
+    "RequiredParameters": [],
+    "ImpactWarning": "An alert requires an appropriate event condition, action group and notification configuration. Configure and test the alert before relying on it for incident detection.",
+    "RequiresApproval": true
+  },
+  {
+    "Id": "MIS-002",
+    "Name": "Disable Key Vault Public Network Access",
+    "SupportedRuleIds": [ "KeyVaultPublicNetwork" ],
+    "ResourceTypes": [ "Microsoft.KeyVault/vaults" ],
+    "Description": "The Key Vault allows access through its public network endpoint. Disable public network access and use private connectivity or an approved restricted network design.",
+    "CommandTemplate": "az keyvault update --name {vaultName} --resource-group {resourceGroup} --public-network-access Disabled",
+    "RequiredParameters": [ "vaultName", "resourceGroup" ],
+    "ImpactWarning": "Applications and users accessing the vault through its public endpoint may lose connectivity. Verify private endpoint connectivity, firewall configuration and DNS before applying.",
+    "RequiresApproval": true
+  },
+  {
+    "Id": "MIS-003",
+    "Name": "Enable Key Vault Purge Protection",
+    "SupportedRuleIds": [ "KeyVaultPurgeProtection" ],
+    "ResourceTypes": [ "Microsoft.KeyVault/vaults" ],
+    "Description": "The Key Vault does not have purge protection enabled. Enable purge protection to prevent permanently deleting soft-deleted vault objects during the retention period.",
+    "CommandTemplate": "az keyvault update --name {vaultName} --resource-group {resourceGroup} --enable-purge-protection true",
+    "RequiredParameters": [ "vaultName", "resourceGroup" ],
+    "ImpactWarning": "Purge protection cannot be disabled after it is enabled. Deleted objects cannot be permanently purged during the retention period. Confirm that this lifecycle behavior is acceptable.",
+    "RequiresApproval": true
+  },
+  {
+    "Id": "MIS-004",
+    "Name": "Key Vault Soft Delete Configuration",
+    "SupportedRuleIds": [ "KeyVaultSoftDelete" ],
+    "ResourceTypes": [ "Microsoft.KeyVault/vaults" ],
+    "Description": "The scanner reports that Key Vault soft delete is disabled. Verify the vault API response and its supported configuration before attempting remediation.",
+    "CommandTemplate": "",
+    "RequiredParameters": [],
+    "ImpactWarning": "Soft delete is enabled by default and mandatory for modern Azure Key Vault deployments. There may be no supported remediation operation for an existing vault. Do not generate an unsupported configuration command.",
+    "RequiresApproval": true
+  },
+  {
+    "Id": "MIS-005",
+    "Name": "Remove Unrestricted SQL Firewall Rule",
+    "SupportedRuleIds": [ "SqlFirewallRule" ],
+    "ResourceTypes": [ "Microsoft.Sql/servers" ],
+    "Description": "The SQL Server has a firewall rule allowing connections from all IPv4 addresses. Remove the unrestricted rule and allow only trusted source IP addresses or private network connectivity.",
+    "CommandTemplate": "az sql server firewall-rule delete --name {firewallRuleName} --resource-group {resourceGroup} --server {serverName}",
+    "RequiredParameters": [ "firewallRuleName", "resourceGroup", "serverName" ],
+    "ImpactWarning": "Deleting a firewall rule can interrupt database connectivity. Confirm the exact unrestricted rule and verify that required trusted IP addresses have alternative access rules before applying.",
+    "RequiresApproval": true
+  },
+  {
+    "Id": "MIS-006",
+    "Name": "Disable SQL Server Public Network Access",
+    "SupportedRuleIds": [ "SqlPublicNetworkRule" ],
+    "ResourceTypes": [ "Microsoft.Sql/servers" ],
+    "Description": "The Azure SQL Server allows access through its public network endpoint. Disable public network access and use private connectivity where appropriate.",
+    "CommandTemplate": "az sql server update --name {serverName} --resource-group {resourceGroup} --enable-public-network false",
+    "RequiredParameters": [ "serverName", "resourceGroup" ],
+    "ImpactWarning": "Clients connecting through the public endpoint may lose access. Verify private endpoints, virtual network connectivity, DNS and application connectivity before applying.",
+    "RequiresApproval": true
+  },
+  {
+    "Id": "MIS-007",
+    "Name": "Enforce SQL Server TLS 1.2",
+    "SupportedRuleIds": [ "SqlTls" ],
+    "ResourceTypes": [ "Microsoft.Sql/servers" ],
+    "Description": "The Azure SQL Server minimum TLS version is below 1.2. Require TLS 1.2 for supported client connections.",
+    "CommandTemplate": "az sql server update --name {serverName} --resource-group {resourceGroup} --minimal-tls-version 1.2",
+    "RequiredParameters": [ "serverName", "resourceGroup" ],
+    "ImpactWarning": "Clients using older TLS versions may fail to connect. Verify application drivers, integrations and client compatibility before applying.",
+    "RequiresApproval": true
+  },
+  {
+    "Id": "MIS-009",
+    "Name": "Disable Storage Account Public Blob Access",
+    "SupportedRuleIds": [ "StoragePublicAccess" ],
+    "ResourceTypes": [ "Microsoft.Storage/storageAccounts" ],
+    "Description": "The Storage Account allows anonymous public access to blobs and containers. Disable public blob access unless explicitly required by the workload.",
+    "CommandTemplate": "az storage account update --name {accountName} --resource-group {resourceGroup} --allow-blob-public-access false",
+    "RequiredParameters": [ "accountName", "resourceGroup" ],
+    "ImpactWarning": "Applications and users relying on anonymous blob access may lose access. Review containers, applications and integrations before applying.",
+    "RequiresApproval": true
+  },
+  {
+    "Id": "MIS-010",
+    "Name": "Require Secure Transfer for Storage",
+    "SupportedRuleIds": [ "StorageSecureTransfer" ],
+    "ResourceTypes": [ "Microsoft.Storage/storageAccounts" ],
+    "Description": "The Storage Account does not require HTTPS for service requests. Enable secure transfer to require encrypted connections.",
+    "CommandTemplate": "az storage account update --name {accountName} --resource-group {resourceGroup} --https-only true",
+    "RequiredParameters": [ "accountName", "resourceGroup" ],
+    "ImpactWarning": "Clients using unencrypted HTTP connections may stop working. Verify that all applications and integrations use HTTPS before applying.",
+    "RequiresApproval": true
+  },
+  {
+    "Id": "MIS-011",
+    "Name": "Disable Web App Basic Authentication",
+    "SupportedRuleIds": [ "WebAppBasicAuthentication" ],
+    "ResourceTypes": [ "Microsoft.Web/sites" ],
+    "Description": "Basic Authentication is enabled for one or more App Service publishing endpoints. Disable SCM and FTP basic publishing credentials and use a secure deployment authentication method.",
+    "CommandTemplate": "",
+    "RequiredParameters": [],
+    "ImpactWarning": "Deployment pipelines and FTP publishing workflows that depend on basic publishing credentials may stop working. Both SCM and FTP policies must be reviewed and updated. Validate deployment authentication before applying.",
+    "RequiresApproval": true
+  },
+  {
+    "Id": "MIS-012",
+    "Name": "Restrict Web App CORS Origins",
+    "SupportedRuleIds": [ "WebAppCors" ],
+    "ResourceTypes": [ "Microsoft.Web/sites" ],
+    "Description": "The Web App CORS configuration allows all origins. Replace the wildcard origin with the exact trusted origins required by the application.",
+    "CommandTemplate": "",
+    "RequiredParameters": [],
+    "ImpactWarning": "Replacing wildcard CORS with an incomplete origin list can break frontend applications and integrations. Obtain the approved origin list before changing the configuration.",
+    "RequiresApproval": true
+  },
+  {
+    "Id": "MIS-013",
+    "Name": "Restrict Web App FTP to FTPS",
+    "SupportedRuleIds": [ "WebAppFtpState" ],
+    "ResourceTypes": [ "Microsoft.Web/sites" ],
+    "Description": "The Web App allows FTP connections that can transfer files without encryption. Configure FTPS-only access or disable FTP and FTPS if file transfer is not required.",
+    "CommandTemplate": "az webapp config set --name {appName} --resource-group {resourceGroup} --ftps-state FtpsOnly",
+    "RequiredParameters": [ "appName", "resourceGroup" ],
+    "ImpactWarning": "Unencrypted FTP clients will no longer be able to connect. Verify deployment tools and file-transfer integrations support FTPS.",
+    "RequiresApproval": true
+  },
+  {
+    "Id": "MIS-014",
+    "Name": "Enable HTTPS Only for Web App",
+    "SupportedRuleIds": [ "WebAppHttpsOnly" ],
+    "ResourceTypes": [ "Microsoft.Web/sites" ],
+    "Description": "The Web App accepts HTTP traffic. Enable HTTPS-only access to require encrypted connections.",
+    "CommandTemplate": "az webapp update --name {appName} --resource-group {resourceGroup} --https-only true",
+    "RequiredParameters": [ "appName", "resourceGroup" ],
+    "ImpactWarning": "Clients using direct HTTP connections may need to update their endpoints. Verify HTTPS configuration and application dependencies before applying.",
+    "RequiresApproval": true
+  },
+  {
+    "Id": "MIS-015",
+    "Name": "Enable Web App Application Logging",
+    "SupportedRuleIds": [ "WebAppLogging" ],
+    "ResourceTypes": [ "Microsoft.Web/sites" ],
+    "Description": "Application filesystem logging is disabled for the Web App. Enable application logging with an appropriate logging level to support monitoring and incident investigation.",
+    "CommandTemplate": "az webapp log config --name {appName} --resource-group {resourceGroup} --application-logging filesystem --level information",
+    "RequiredParameters": [ "appName", "resourceGroup" ],
+    "ImpactWarning": "Logging increases storage usage and can expose sensitive information if application logs contain secrets or personal data. Review retention, log content and operational cost.",
+    "RequiresApproval": true
+  },
+  {
+    "Id": "MIS-016",
+    "Name": "Disable Web App Remote Debugging",
+    "SupportedRuleIds": [ "WebAppRemoteDebugging" ],
+    "ResourceTypes": [ "Microsoft.Web/sites" ],
+    "Description": "Remote debugging is enabled for the Web App. Disable remote debugging unless it is explicitly required for development or troubleshooting.",
+    "CommandTemplate": "az webapp config set --name {appName} --resource-group {resourceGroup} --remote-debugging-enabled false",
+    "RequiredParameters": [ "appName", "resourceGroup" ],
+    "ImpactWarning": "Active remote debugging sessions will be interrupted. Verify that remote debugging is not required for an active troubleshooting session.",
+    "RequiresApproval": true
+  }
+]

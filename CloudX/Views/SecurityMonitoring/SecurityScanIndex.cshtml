@@ -1,0 +1,199 @@
+﻿@{
+    ViewData["Title"] = "Security Scan";
+}
+
+<link rel="stylesheet"
+      href="~/css/SecurityMonitoring/securityscanindex.css" />
+
+<div class="scan-container">
+
+    <!-- ============================= -->
+    <!-- HEADER -->
+    <!-- ============================= -->
+
+    <div class="scan-header">
+
+        <h1>
+            Security Scan
+        </h1>
+
+        <p>
+            Select a security category to scan your Azure environment
+            and view all detected security risks.
+        </p>
+
+    </div>
+
+
+    <!-- ============================= -->
+    <!-- SECURITY CATEGORIES -->
+    <!-- ============================= -->
+
+    <div class="category-grid">
+
+
+        <!-- ============================= -->
+        <!-- 1. MISCONFIGURATION -->
+        <!-- ============================= -->
+
+        <a class="category-card"
+           href="@Url.Action("Scan", "Misconfiguration")">
+
+            <div class="category-icon">
+                ⚙️
+            </div>
+
+            <h2>
+                Misconfiguration
+            </h2>
+
+            <p>
+                Detect insecure or incorrectly configured
+                Azure resources and services.
+            </p>
+
+            <span class="scan-button">
+                Scan Category →
+            </span>
+
+        </a>
+
+
+        <!-- ============================= -->
+        <!-- 2. PUBLIC EXPOSURE -->
+        <!-- ============================= -->
+
+        <a class="category-card"
+           href="@Url.Action("Scan", "PublicExposure")">
+
+            <div class="category-icon">
+                🌐
+            </div>
+
+            <h2>
+                Public Exposure
+            </h2>
+
+            <p>
+                Identify Azure resources that may be
+                unnecessarily exposed to the public internet.
+            </p>
+
+            <span class="scan-button">
+                Scan Category →
+            </span>
+
+        </a>
+
+
+        <!-- ============================= -->
+        <!-- 3. IDENTITY & ACCESS -->
+        <!-- ============================= -->
+
+        <a class="category-card"
+           href="@Url.Action("Scan", "IdentityAccess")">
+
+            <div class="category-icon">
+                🔐
+            </div>
+
+            <h2>
+                Identity &amp; Access
+            </h2>
+
+            <p>
+                Check authentication, managed identities,
+                RBAC and access-control configurations.
+            </p>
+
+            <span class="scan-button">
+                Scan Category →
+            </span>
+
+        </a>
+
+
+        <!-- ============================= -->
+        <!-- 4. ENCRYPTION -->
+        <!-- ============================= -->
+
+        <a class="category-card"
+           href="@Url.Action("Scan", "Encryption")">
+
+            <div class="category-icon">
+                🛡️
+            </div>
+
+            <h2>
+                Encryption
+            </h2>
+
+            <p>
+                Check encryption, TLS and customer-managed
+                key protection across supported resources.
+            </p>
+
+            <span class="scan-button">
+                Scan Category →
+            </span>
+
+        </a>
+
+
+        <!-- ============================= -->
+        <!-- 5. NETWORK & FIREWALL -->
+        <!-- ============================= -->
+
+        <a class="category-card"
+           href="@Url.Action("Scan", "NetworkFirewall")">
+
+            <div class="category-icon">
+                🔥
+            </div>
+
+            <h2>
+                Network &amp; Firewall
+            </h2>
+
+            <p>
+                Detect risky network configurations,
+                firewall rules and open inbound access.
+            </p>
+
+            <span class="scan-button">
+                Scan Category →
+            </span>
+
+        </a>
+
+
+        <!-- ============================= -->
+        <!-- 6. STORAGE & DATABASE -->
+        <!-- ============================= -->
+
+        <a class="category-card"
+           href="@Url.Action("Scan", "StorageDatabase")">
+
+            <div class="category-icon">
+                🗄️
+            </div>
+
+            <h2>
+                Storage &amp; Database
+            </h2>
+
+            <p>
+                Check storage and database security,
+                encryption, access and private connectivity.
+            </p>
+
+            <span class="scan-button">
+                Scan Category →
+            </span>
+
+        </a>
+
+
+    </div>
+
+</div>

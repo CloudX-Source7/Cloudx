@@ -1,0 +1,474 @@
+﻿@{
+    Layout = null;
+    ViewData["Title"] = "Dashboard - CloudX";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>CloudX Dashboard</title>
+
+    <link rel="stylesheet" href="~/css/Start/dashboard.css" />
+</head>
+
+<body>
+
+    <div class="dashboard-shell">
+
+        <aside class="sidebar">
+
+            <div class="sidebar-brand">
+
+                <div class="brand-mark">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+                <div class="brand-name">
+                    Cloud<span>X</span>
+                </div>
+
+            </div>
+
+            <nav class="sidebar-nav">
+
+                <a href="/LogReg/Dashboard"
+                   class="nav-item active">
+
+                    <span class="nav-icon">⌂</span>
+                    <span>Dashboard</span>
+
+                </a>
+
+                <a href="/AzureDiscovery/Index"
+                   class="nav-item">
+
+                    <span class="nav-icon">◈</span>
+                    <span>Cloud Discovery</span>
+
+                </a>
+
+                <a href="/AzureCost/Index"
+                   class="nav-item">
+
+                    <span class="nav-icon">$</span>
+                    <span>Cost Intelligence</span>
+
+                </a>
+                <a href="/AzureUnusedResource/Index"
+   class="nav-item">
+
+    <span class="nav-icon">◉</span>
+    <span>Unused Resources</span>
+
+</a>
+
+<a href="/AzureUnderutilizedResource/Index"
+   class="nav-item">
+
+    <span class="nav-icon">◌</span>
+    <span>Underutilized Resources</span>
+
+</a>
+
+                <a href="#"
+                   class="nav-item">
+
+                    <span class="nav-icon">◆</span>
+                    <span>Security</span>
+
+                </a>
+
+                <a href="#"
+                   class="nav-item">
+
+                    <span class="nav-icon">✦</span>
+                    <span>AI Copilot</span>
+
+                </a>
+
+            </nav>
+
+            <div class="sidebar-bottom">
+
+                <a href="#"
+                   class="nav-item">
+
+                    <span class="nav-icon">⚙</span>
+                    <span>Settings</span>
+
+                </a>
+
+                <a href="#"
+                   class="nav-item">
+
+                    <span class="nav-icon">↪</span>
+                    <span>Logout</span>
+
+                </a>
+
+            </div>
+
+        </aside>
+
+        <main class="main-content">
+
+            <header class="topbar">
+
+                <div class="mobile-brand">
+
+                    <div class="brand-mark">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+
+                    <div class="brand-name">
+                        Cloud<span>X</span>
+                    </div>
+
+                </div>
+
+                <div class="topbar-title">
+
+                    <span class="eyebrow">
+                        CLOUD INTELLIGENCE
+                    </span>
+
+                    <h1>
+                        Dashboard
+                    </h1>
+
+                </div>
+
+                <div class="topbar-actions">
+
+                    <div class="connection-status">
+
+                        <span class="status-indicator"></span>
+
+                        Azure not connected
+
+                    </div>
+
+                    <div class="profile">
+
+                        <div class="profile-avatar">
+                            C
+                        </div>
+
+                        <div class="profile-info">
+
+                            <strong>
+                                Cloud User
+                            </strong>
+
+                            <span>
+                                Account
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+            <section class="dashboard-content">
+
+                <div class="welcome-section">
+
+                    <div>
+
+                        <span class="eyebrow">
+                            CLOUDX OVERVIEW
+                        </span>
+
+                        <h2>
+                            See your cloud clearly.
+                        </h2>
+
+                        <p>
+                            Connect your Azure environment to discover resources,
+                            understand costs, and monitor security from one place.
+                        </p>
+
+                    </div>
+
+                    <a href="/LogReg/ConnectAzure"
+                       class="primary-button">
+
+                        Connect Azure
+
+                        <span>→</span>
+
+                    </a>
+
+                </div>
+
+                <section class="stats-grid">
+
+                    <div class="stat-card">
+
+                        <div class="stat-top">
+
+                            <div class="stat-icon blue">
+                                ◈
+                            </div>
+
+                        </div>
+
+                        <div class="stat-value">
+                            —
+                        </div>
+
+                        <div class="stat-label">
+                            RESOURCES
+                        </div>
+
+                        <div class="stat-description">
+                            Azure resources discovered
+                        </div>
+
+                    </div>
+
+                    <div class="stat-card">
+
+                        <div class="stat-top">
+
+                            <div class="stat-icon purple">
+                                $
+                            </div>
+
+                        </div>
+
+                        <div class="stat-value">
+                            —
+                        </div>
+
+                        <div class="stat-label">
+                            MONTHLY COST
+                        </div>
+
+                        <div class="stat-description">
+                            Current cloud spending
+                        </div>
+
+                    </div>
+
+                    <div class="stat-card">
+
+                        <div class="stat-top">
+
+                            <div class="stat-icon green">
+                                ✓
+                            </div>
+
+                        </div>
+
+                        <div class="stat-value">
+                            —
+                        </div>
+
+                        <div class="stat-label">
+                            SECURITY SCORE
+                        </div>
+
+                        <div class="stat-description">
+                            Overall security posture
+                        </div>
+
+                    </div>
+
+                    <div class="stat-card">
+
+                        <div class="stat-top">
+
+                            <div class="stat-icon orange">
+                                $
+                            </div>
+
+                        </div>
+
+                        <div class="stat-value">
+                            —
+                        </div>
+
+                        <div class="stat-label">
+                            POTENTIAL SAVINGS
+                        </div>
+
+                        <div class="stat-description">
+                            Optimization opportunities
+                        </div>
+
+                    </div>
+
+                </section>
+
+                <section class="main-grid">
+
+                    <div class="large-card">
+
+                        <div class="card-header">
+
+                            <div>
+
+                                <span class="eyebrow">
+                                    CLOUD ENVIRONMENT
+                                </span>
+
+                                <h3>
+                                    Connect your Azure account
+                                </h3>
+
+                            </div>
+
+                            <span class="pending-badge">
+                                Pending
+                            </span>
+
+                        </div>
+
+                        <div class="connect-area">
+
+                            <div class="cloud-illustration">
+
+                                <div class="cloud-shape">
+                                    ☁
+                                </div>
+
+                            </div>
+
+                            <div class="connect-copy">
+
+                                <h4>
+                                    Your cloud intelligence starts here.
+                                </h4>
+
+                                <p>
+                                    Connect Azure securely to let CloudX discover
+                                    your infrastructure, analyze spending, and
+                                    monitor your cloud security.
+                                </p>
+
+                                <a href="/LogReg/ConnectAzure"
+                                   class="secondary-button">
+
+                                    Connect Azure
+
+                                    <span>→</span>
+
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="side-card">
+
+                        <div class="card-header">
+
+                            <div>
+
+                                <span class="eyebrow">
+                                    SYSTEM STATUS
+                                </span>
+
+                                <h3>
+                                    CloudX services
+                                </h3>
+
+                            </div>
+
+                        </div>
+
+                        <div class="status-list">
+
+                            <div class="status-row">
+
+                                <div class="status-name">
+
+                                    <span class="status-dot ready"></span>
+
+                                    Dashboard
+
+                                </div>
+
+                                <span class="status-text">
+                                    Ready
+                                </span>
+
+                            </div>
+
+                            <div class="status-row">
+
+                                <div class="status-name">
+
+                                    <span class="status-dot"></span>
+
+                                    Azure Connection
+
+                                </div>
+
+                                <span class="status-text">
+                                    Pending
+                                </span>
+
+                            </div>
+
+                            <div class="status-row">
+
+                                <div class="status-name">
+
+                                    <span class="status-dot"></span>
+
+                                    Cost Intelligence
+
+                                </div>
+
+                                <span class="status-text">
+                                    Waiting
+                                </span>
+
+                            </div>
+
+                            <div class="status-row">
+
+                                <div class="status-name">
+
+                                    <span class="status-dot"></span>
+
+                                    Security Monitoring
+
+                                </div>
+
+                                <span class="status-text">
+                                    Waiting
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </section>
+
+        </main>
+
+    </div>
+
+</body>
+</html>
