@@ -1,0 +1,74 @@
+[
+  {
+    "Id": "PUB-001",
+    "Name": "Disable Key Vault Public Network Access",
+    "SupportedRuleIds": [
+      "KeyVaultPublicNetwork"
+    ],
+    "ResourceTypes": [
+      "Microsoft.KeyVault/vaults"
+    ],
+    "Description": "The Azure Key Vault allows access through its public network endpoint. Disable public network access and use private connectivity where appropriate.",
+    "CommandTemplate": "az keyvault update --name {vaultName} --resource-group {resourceGroup} --public-network-access Disabled",
+    "RequiredParameters": [
+      "vaultName",
+      "resourceGroup"
+    ],
+    "ImpactWarning": "Applications and users accessing the vault through its public endpoint may lose connectivity. Verify private endpoint connectivity, DNS and network configuration before applying.",
+    "RequiresApproval": true
+  },
+  {
+    "Id": "PUB-002",
+    "Name": "Disable SQL Server Public Network Access",
+    "SupportedRuleIds": [
+      "SqlPublicAccess"
+    ],
+    "ResourceTypes": [
+      "Microsoft.Sql/servers"
+    ],
+    "Description": "The Azure SQL Server allows access through its public network endpoint. Disable public network access and use private connectivity where appropriate.",
+    "CommandTemplate": "az sql server update --name {serverName} --resource-group {resourceGroup} --enable-public-network false",
+    "RequiredParameters": [
+      "serverName",
+      "resourceGroup"
+    ],
+    "ImpactWarning": "Applications and clients using the public endpoint may lose connectivity. Verify private endpoints, DNS and application connectivity before applying.",
+    "RequiresApproval": true
+  },
+  {
+    "Id": "PUB-003",
+    "Name": "Disable Storage Account Public Blob Access",
+    "SupportedRuleIds": [
+      "StoragePublicBlob"
+    ],
+    "ResourceTypes": [
+      "Microsoft.Storage/storageAccounts"
+    ],
+    "Description": "The Storage Account permits anonymous public access to blobs and containers. Disable public blob access unless explicitly required by the workload.",
+    "CommandTemplate": "az storage account update --name {accountName} --resource-group {resourceGroup} --allow-blob-public-access false",
+    "RequiredParameters": [
+      "accountName",
+      "resourceGroup"
+    ],
+    "ImpactWarning": "Applications and users relying on anonymous blob access may lose access. Review containers, applications and integrations before applying.",
+    "RequiresApproval": true
+  },
+  {
+    "Id": "PUB-004",
+    "Name": "Disable Web App Public Network Access",
+    "SupportedRuleIds": [
+      "WebAppPublicAccess"
+    ],
+    "ResourceTypes": [
+      "Microsoft.Web/sites"
+    ],
+    "Description": "The Azure Web App allows access through its public network endpoint. Disable public network access and use private connectivity where appropriate.",
+    "CommandTemplate": "az webapp update --name {appName} --resource-group {resourceGroup} --set publicNetworkAccess=Disabled",
+    "RequiredParameters": [
+      "appName",
+      "resourceGroup"
+    ],
+    "ImpactWarning": "Publicly accessible application endpoints may become unavailable. Verify private endpoint configuration, DNS, access restrictions and application dependencies before applying.",
+    "RequiresApproval": true
+  }
+]

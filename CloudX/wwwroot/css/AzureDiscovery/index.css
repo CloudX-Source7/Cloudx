@@ -1,0 +1,484 @@
+﻿/* ============================================================
+   CLOUDX AZURE DISCOVERY
+   Professional Azure-inspired interface
+   ============================================================ */
+
+:root {
+    --cloudx-blue: #0078d4;
+    --cloudx-blue-dark: #005a9e;
+    --cloudx-blue-light: #eaf4fb;
+    --cloudx-navy: #0f172a;
+    --cloudx-navy-light: #1e293b;
+    --cloudx-background: #f4f7fb;
+    --cloudx-white: #ffffff;
+    --cloudx-text: #172033;
+    --cloudx-text-secondary: #475569;
+    --cloudx-muted: #64748b;
+    --cloudx-border: #dbe3ec;
+    --cloudx-shadow: 0 10px 30px rgba(15, 23, 42, 0.07);
+    --cloudx-radius: 14px;
+}
+
+
+/* ============================================================
+   PAGE
+   ============================================================ */
+
+.azure-discovery-page {
+    min-height: 100vh;
+    padding: 40px 24px 70px;
+    background: linear-gradient( 180deg, #eef5fb 0, #f4f7fb 260px, #f4f7fb 100% );
+    color: var(--cloudx-text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+
+/* ============================================================
+   PAGE HEADER
+   ============================================================ */
+
+.azure-discovery-header {
+    max-width: 1200px;
+    margin: 0 auto 28px;
+    padding: 30px 34px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+    border-radius: 18px;
+    color: white;
+    background: linear-gradient( 135deg, #0f172a 0%, #172554 45%, #0078d4 100% );
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.16);
+}
+
+
+/* ============================================================
+   HEADER CONTENT
+   ============================================================ */
+
+.azure-header-content {
+    display: flex;
+    align-items: center;
+    gap: 17px;
+}
+
+
+.azure-header-icon {
+    width: 55px;
+    height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    font-size: 26px;
+}
+
+
+.azure-discovery-header h1 {
+    margin: 0;
+    font-size: 29px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+
+.azure-discovery-header p {
+    margin: 7px 0 0;
+    color: rgba(255, 255, 255, 0.76);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+
+/* ============================================================
+   RESOURCE COUNT
+   ============================================================ */
+
+.azure-resource-count {
+    min-width: 110px;
+    padding: 14px 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.11);
+    border: 1px solid rgba(255, 255, 255, 0.13);
+}
+
+
+.count-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: rgba(255, 255, 255, 0.68);
+}
+
+
+.count-number {
+    margin-top: 3px;
+    font-size: 25px;
+    font-weight: 700;
+}
+
+
+/* ============================================================
+   RESOURCE CARD
+   ============================================================ */
+
+.resource-card {
+    max-width: 1200px;
+    margin: 0 auto;
+    overflow: hidden;
+    background: var(--cloudx-white);
+    border: 1px solid var(--cloudx-border);
+    border-radius: var(--cloudx-radius);
+    box-shadow: var(--cloudx-shadow);
+}
+
+
+/* ============================================================
+   CARD HEADER
+   ============================================================ */
+
+.resource-card-header {
+    padding: 23px 27px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    border-bottom: 1px solid var(--cloudx-border);
+}
+
+
+    .resource-card-header h2 {
+        margin: 0;
+        font-size: 19px;
+        font-weight: 700;
+        color: var(--cloudx-text);
+    }
+
+
+    .resource-card-header p {
+        margin: 5px 0 0;
+        font-size: 13px;
+        color: var(--cloudx-muted);
+    }
+
+
+.inventory-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    color: var(--cloudx-blue);
+    background: var(--cloudx-blue-light);
+    font-size: 21px;
+}
+
+
+/* ============================================================
+   TABLE WRAPPER
+   ============================================================ */
+
+.resource-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+
+/* ============================================================
+   TABLE
+   ============================================================ */
+
+.resource-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: auto;
+}
+
+
+    .resource-table thead {
+        background: #f8fafc;
+    }
+
+
+    .resource-table th {
+        padding: 14px 20px;
+        text-align: left;
+        white-space: nowrap;
+        color: #64748b;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.55px;
+        border-bottom: 1px solid var(--cloudx-border);
+    }
+
+
+    .resource-table td {
+        padding: 17px 20px;
+        vertical-align: middle;
+        border-bottom: 1px solid #edf1f5;
+        color: var(--cloudx-text-secondary);
+        font-size: 13px;
+    }
+
+
+    .resource-table tbody tr {
+        transition: background 0.15s ease;
+    }
+
+
+        .resource-table tbody tr:hover {
+            background: #f8fbfe;
+        }
+
+
+        .resource-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+
+/* ============================================================
+   RESOURCE NAME
+   ============================================================ */
+
+.resource-name {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 190px;
+}
+
+
+.resource-icon {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9px;
+    background: #eaf4fb;
+    color: var(--cloudx-blue);
+    font-size: 17px;
+    font-weight: 700;
+}
+
+
+.resource-name-text {
+    display: block;
+    max-width: 240px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--cloudx-text);
+    font-weight: 650;
+}
+
+
+.resource-label {
+    display: block;
+    margin-top: 3px;
+    color: #94a3b8;
+    font-size: 11px;
+}
+
+
+/* ============================================================
+   RESOURCE TYPE
+   ============================================================ */
+
+.resource-type {
+    display: inline-block;
+    max-width: 230px;
+    padding: 6px 9px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    border-radius: 7px;
+    background: #f1f5f9;
+    color: #475569;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+
+/* ============================================================
+   LOCATION
+   ============================================================ */
+
+.resource-location {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    white-space: nowrap;
+}
+
+
+.location-icon {
+    color: var(--cloudx-blue);
+    font-size: 15px;
+}
+
+
+/* ============================================================
+   RESOURCE GROUP
+   ============================================================ */
+
+.resource-group {
+    display: inline-block;
+    max-width: 190px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #334155;
+    font-weight: 600;
+}
+
+
+/* ============================================================
+   SUBSCRIPTION
+   ============================================================ */
+
+.subscription-id {
+    display: inline-block;
+    max-width: 240px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 6px 9px;
+    border-radius: 7px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    color: #64748b;
+    font-family: "Cascadia Code", "Consolas", monospace;
+    font-size: 11px;
+}
+
+
+/* ============================================================
+   EMPTY STATE
+   ============================================================ */
+
+.empty-resource-card {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 65px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: var(--cloudx-white);
+    border: 1px solid var(--cloudx-border);
+    border-radius: var(--cloudx-radius);
+    box-shadow: var(--cloudx-shadow);
+}
+
+
+.empty-icon {
+    width: 65px;
+    height: 65px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 18px;
+    background: var(--cloudx-blue-light);
+    color: var(--cloudx-blue);
+    font-size: 30px;
+}
+
+
+.empty-resource-card h2 {
+    margin: 18px 0 0;
+    font-size: 21px;
+    color: var(--cloudx-text);
+}
+
+
+.empty-resource-card p {
+    max-width: 470px;
+    margin: 9px auto 0;
+    color: var(--cloudx-muted);
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 850px) {
+
+    .azure-discovery-header {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 25px;
+    }
+
+
+    .azure-resource-count {
+        align-self: stretch;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+
+    .count-number {
+        margin-top: 0;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .azure-discovery-page {
+        padding: 20px 12px 50px;
+    }
+
+
+    .azure-discovery-header {
+        border-radius: 13px;
+        padding: 22px 20px;
+    }
+
+
+    .azure-header-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 21px;
+    }
+
+
+    .azure-discovery-header h1 {
+        font-size: 23px;
+    }
+
+
+    .azure-discovery-header p {
+        font-size: 12px;
+    }
+
+
+    .resource-card-header {
+        padding: 19px;
+    }
+
+
+        .resource-card-header h2 {
+            font-size: 17px;
+        }
+
+
+    .resource-table th,
+    .resource-table td {
+        padding: 14px 15px;
+    }
+}

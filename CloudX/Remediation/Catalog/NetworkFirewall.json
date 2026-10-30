@@ -1,0 +1,133 @@
+[
+  {
+    "Id": "NET-001",
+    "Name": "Disable Key Vault Public Network Access",
+    "SupportedRuleIds": [
+      "KeyVaultFirewall"
+    ],
+    "ResourceTypes": [
+      "Microsoft.KeyVault/vaults"
+    ],
+    "Description": "The Key Vault allows access through its public network endpoint. Disable public network access and use private endpoints or an approved restricted network design.",
+    "CommandTemplate": "az keyvault update --name {vaultName} --resource-group {resourceGroup} --public-network-access Disabled",
+    "RequiredParameters": [
+      "vaultName",
+      "resourceGroup"
+    ],
+    "ImpactWarning": "Applications and users accessing the vault through its public endpoint may lose connectivity. Verify private endpoint connectivity, DNS and network configuration before applying.",
+    "RequiresApproval": true
+  },
+  {
+    "Id": "NET-002",
+    "Name": "Remove Broad Inbound NSG Rule",
+    "SupportedRuleIds": [
+      "NsgBroadInbound"
+    ],
+    "ResourceTypes": [
+      "Microsoft.Network/networkSecurityGroups"
+    ],
+    "Description": "The Network Security Group contains an inbound allow rule permitting internet traffic across a broad range of ports. Remove the offending rule or replace it with a narrowly scoped rule.",
+    "CommandTemplate": "az network nsg rule delete --resource-group {resourceGroup} --nsg-name {nsgName} --name {ruleName}",
+    "RequiredParameters": [
+      "resourceGroup",
+      "nsgName",
+      "ruleName"
+    ],
+    "ImpactWarning": "Deleting the rule may interrupt legitimate inbound connectivity. Identify the exact offending rule and review dependent applications before applying.",
+    "RequiresApproval": true
+  },
+  {
+    "Id": "NET-003",
+    "Name": "Remove Unrestricted Internet NSG Rule",
+    "SupportedRuleIds": [
+      "NsgOpenInternet"
+    ],
+    "ResourceTypes": [
+      "Microsoft.Network/networkSecurityGroups"
+    ],
+    "Description": "The Network Security Group contains an inbound allow rule permitting unrestricted internet access to any destination port. Remove the offending rule or replace it with restricted source and destination ranges.",
+    "CommandTemplate": "az network nsg rule delete --resource-group {resourceGroup} --nsg-name {nsgName} --name {ruleName}",
+    "RequiredParameters": [
+      "resourceGroup",
+      "nsgName",
+      "ruleName"
+    ],
+    "ImpactWarning": "Deleting the rule can interrupt application connectivity. Confirm the exact rule and required inbound traffic before applying.",
+    "RequiresApproval": true
+  },
+  {
+    "Id": "NET-004",
+    "Name": "Remove Unrestricted SQL Firewall Rule",
+    "SupportedRuleIds": [
+      "SqlFirewall"
+    ],
+    "ResourceTypes": [
+      "Microsoft.Sql/servers"
+    ],
+    "Description": "The Azure SQL Server has a firewall rule allowing connections from any IPv4 address. Remove the unrestricted firewall rule.",
+    "CommandTemplate": "az sql server firewall-rule delete --name {firewallRuleName} --resource-group {resourceGroup} --server {serverName}",
+    "RequiredParameters": [
+      "firewallRuleName",
+      "resourceGroup",
+      "serverName"
+    ],
+    "ImpactWarning": "Deleting the firewall rule can interrupt database connectivity. Confirm the exact rule and ensure trusted clients have alternative access before applying.",
+    "RequiresApproval": true
+  },
+  {
+    "Id": "NET-005",
+    "Name": "Disable SQL Server Public Network Access",
+    "SupportedRuleIds": [
+      "SqlPublicNetwork"
+    ],
+    "ResourceTypes": [
+      "Microsoft.Sql/servers"
+    ],
+    "Description": "The Azure SQL Server allows connections through its public network endpoint. Disable public network access and use private connectivity.",
+    "CommandTemplate": "az sql server update --name {serverName} --resource-group {resourceGroup} --enable-public-network false",
+    "RequiredParameters": [
+      "serverName",
+      "resourceGroup"
+    ],
+    "ImpactWarning": "Applications and clients using the public endpoint may lose connectivity. Verify private endpoints, DNS and application connectivity before applying.",
+    "RequiresApproval": true
+  },
+  {
+    "Id": "NET-006",
+    "Name": "Disable Storage Account Public Network Access",
+    "SupportedRuleIds": [
+      "StorageNetwork"
+    ],
+    "ResourceTypes": [
+      "Microsoft.Storage/storageAccounts"
+    ],
+    "Description": "The Storage Account allows access through its public network endpoint. Disable public network access and use private endpoints or approved restricted network access.",
+    "CommandTemplate": "az storage account update --name {accountName} --resource-group {resourceGroup} --public-network-access Disabled",
+    "RequiredParameters": [
+      "accountName",
+      "resourceGroup"
+    ],
+    "ImpactWarning": "Applications and services using the public endpoint may lose connectivity. Verify private endpoints, DNS and application dependencies before applying.",
+    "RequiresApproval": true
+  },
+  {
+    "Id": "NET-007",
+    "Name": "Associate Network Security Group with Subnet",
+    "SupportedRuleIds": [
+      "SubnetMissingNsg"
+    ],
+    "ResourceTypes": [
+      "Microsoft.Network/virtualNetworks/subnets"
+    ],
+    "Description": "The subnet does not have an associated Network Security Group. Associate an existing NSG to control inbound and outbound network traffic.",
+    "CommandTemplate": "az network vnet subnet update --resource-group {resourceGroup} --vnet-name {vnetName} --name {subnetName} --network-security-group {nsgName}",
+    "RequiredParameters": [
+      "resourceGroup",
+      "vnetName",
+      "subnetName",
+      "nsgName"
+    ],
+    "ImpactWarning": "Associating an NSG changes subnet traffic filtering. Review existing security rules and verify required application connectivity before applying.",
+    "RequiresApproval": true
+  }
+]

@@ -1,0 +1,107 @@
+[
+  {
+    "Id": "IAM-001",
+    "Name": "Key Vault Access Policy to Azure RBAC Migration",
+    "SupportedRuleIds": [
+      "KeyVaultAccessPolicy"
+    ],
+    "ResourceTypes": [
+      "Microsoft.KeyVault/vaults"
+    ],
+    "Description": "The Key Vault uses the legacy access-policy authorization model. Evaluate migration to Azure RBAC and assign least-privilege data-plane roles.",
+    "CommandTemplate": "az keyvault update --name {vaultName} --resource-group {resourceGroup} --enable-rbac-authorization true",
+    "RequiredParameters": [
+      "vaultName",
+      "resourceGroup"
+    ],
+    "ImpactWarning": "Enabling Azure RBAC causes existing access policies to be ignored. Existing applications and identities may lose access unless equivalent Azure RBAC roles are assigned first. Review and migrate permissions before applying.",
+    "RequiresApproval": true
+  },
+  {
+    "Id": "IAM-002",
+    "Name": "Enable Key Vault Azure RBAC",
+    "SupportedRuleIds": [
+      "KeyVaultRbac"
+    ],
+    "ResourceTypes": [
+      "Microsoft.KeyVault/vaults"
+    ],
+    "Description": "The Key Vault does not have Azure RBAC authorization enabled. Enable RBAC to manage data-plane permissions through Azure role assignments.",
+    "CommandTemplate": "az keyvault update --name {vaultName} --resource-group {resourceGroup} --enable-rbac-authorization true",
+    "RequiredParameters": [
+      "vaultName",
+      "resourceGroup"
+    ],
+    "ImpactWarning": "Existing access policies will no longer authorize data-plane operations after RBAC is enabled. Assign equivalent Azure RBAC roles before changing the authorization model.",
+    "RequiresApproval": true
+  },
+  {
+    "Id": "IAM-003",
+    "Name": "Enable Microsoft Entra-Only SQL Authentication",
+    "SupportedRuleIds": [
+      "SqlAuthentication"
+    ],
+    "ResourceTypes": [
+      "Microsoft.Sql/servers"
+    ],
+    "Description": "The Azure SQL Server allows SQL authentication. Enable Microsoft Entra-only authentication to prevent SQL authentication using SQL credentials.",
+    "CommandTemplate": "az sql server ad-only-auth enable --name {serverName} --resource-group {resourceGroup}",
+    "RequiredParameters": [
+      "serverName",
+      "resourceGroup"
+    ],
+    "ImpactWarning": "SQL authentication connections will stop working after this change. Confirm that the Microsoft Entra administrator is configured and applications, users and automation can authenticate through Microsoft Entra ID.",
+    "RequiresApproval": true
+  },
+  {
+    "Id": "IAM-004",
+    "Name": "Disable Storage Account Shared Key Access",
+    "SupportedRuleIds": [
+      "StorageRbac"
+    ],
+    "ResourceTypes": [
+      "Microsoft.Storage/storageAccounts"
+    ],
+    "Description": "The Storage Account permits Shared Key authentication. Disable Shared Key access and use Microsoft Entra ID with Azure RBAC for authorization.",
+    "CommandTemplate": "az storage account update --name {accountName} --resource-group {resourceGroup} --allow-shared-key-access false",
+    "RequiredParameters": [
+      "accountName",
+      "resourceGroup"
+    ],
+    "ImpactWarning": "Applications and integrations using account keys or Shared Key authorization will fail after this change. Review clients, scripts, SAS usage and integrations before applying. Confirm Entra ID permissions are configured.",
+    "RequiresApproval": true
+  },
+  {
+    "Id": "IAM-005",
+    "Name": "Enable Web App Authentication",
+    "SupportedRuleIds": [
+      "WebAppAuthentication"
+    ],
+    "ResourceTypes": [
+      "Microsoft.Web/sites"
+    ],
+    "Description": "The Web App does not have App Service Authentication enabled and configured to require authentication for incoming requests.",
+    "CommandTemplate": "",
+    "RequiredParameters": [],
+    "ImpactWarning": "Authentication configuration requires an appropriate identity provider, application registration and unauthenticated-request policy. Incorrect configuration can block legitimate users or leave endpoints accessible. Configure and validate the complete Authentication V2 settings before applying.",
+    "RequiresApproval": true
+  },
+  {
+    "Id": "IAM-006",
+    "Name": "Enable Web App Managed Identity",
+    "SupportedRuleIds": [
+      "WebAppManagedIdentity"
+    ],
+    "ResourceTypes": [
+      "Microsoft.Web/sites"
+    ],
+    "Description": "The Web App does not have a system-assigned or user-assigned managed identity. Enable a system-assigned managed identity to allow the application to authenticate to supported Azure services without storing credentials.",
+    "CommandTemplate": "az webapp identity assign --name {appName} --resource-group {resourceGroup}",
+    "RequiredParameters": [
+      "appName",
+      "resourceGroup"
+    ],
+    "ImpactWarning": "Enabling a managed identity creates a new identity but does not automatically grant access to other Azure resources. Assign only the required Azure RBAC roles and update the application to use the identity.",
+    "RequiresApproval": true
+  }
+]

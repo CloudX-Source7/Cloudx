@@ -1,0 +1,153 @@
+﻿* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    background: radial-gradient(circle at 15% 15%, rgba(73, 111, 232, 0.10), transparent 32%), radial-gradient(circle at 85% 85%, rgba(139, 111, 232, 0.08), transparent 32%), #f6f8fc;
+    color: #182236;
+    padding: 30px 20px;
+}
+
+.card {
+    width: min(500px, 100%);
+    padding: 42px;
+    background: rgba(255, 255, 255, 0.96);
+    border: 1px solid #e5eaf2;
+    border-radius: 22px;
+    box-shadow: 0 25px 70px rgba(36, 55, 90, 0.10);
+    text-align: center;
+}
+
+.brand {
+    color: #496fe8;
+    font-size: 25px;
+    font-weight: 750;
+    letter-spacing: -0.8px;
+    margin-bottom: 34px;
+    text-align: left;
+}
+
+.icon {
+    width: 76px;
+    height: 76px;
+    margin: 0 auto 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 19px;
+    background: #eef3ff;
+    color: #496fe8;
+    font-size: 34px;
+    box-shadow: 0 10px 25px rgba(73, 111, 232, 0.08);
+}
+
+h1 {
+    margin: 0 0 12px;
+    font-size: 31px;
+    line-height: 1.15;
+    letter-spacing: -1px;
+}
+
+.subtitle {
+    max-width: 395px;
+    margin: 0 auto 27px;
+    color: #6e7c94;
+    line-height: 1.65;
+    font-size: 14px;
+}
+
+.info {
+    margin-bottom: 25px;
+    padding: 16px 18px;
+    border: 1px solid #e8edf5;
+    border-radius: 12px;
+    background: #f7f9fc;
+    color: #53617a;
+    font-size: 13px;
+    line-height: 1.55;
+}
+
+.connect-button {
+    width: 100%;
+    min-height: 50px;
+    padding: 14px 18px;
+    border: 0;
+    border-radius: 11px;
+    background: #496fe8;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 10px 24px rgba(73, 111, 232, 0.18);
+}
+
+    .connect-button:hover:not(:disabled) {
+        background: #385ed4;
+        transform: translateY(-1px);
+        box-shadow: 0 13px 28px rgba(73, 111, 232, 0.23);
+    }
+
+    .connect-button:active:not(:disabled) {
+        transform: translateY(0);
+    }
+
+    .connect-button:disabled {
+        opacity: 0.78;
+        cursor: not-allowed;
+    }
+
+.spinner {
+    width: 17px;
+    height: 17px;
+    border: 2px solid rgba(255, 255, 255, 0.38);
+    border-top-color: #ffffff;
+    border-radius: 50%;
+    display: inline-block;
+    vertical-align: -4px;
+    animation: spin 0.7s linear infinite;
+    margin-right: 8px;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.footer {
+    max-width: 380px;
+    margin: 22px auto 0;
+    color: #8d99ac;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+@media (max-width: 560px) {
+    body {
+        padding: 18px;
+    }
+
+    .card {
+        padding: 32px 24px;
+        border-radius: 18px;
+    }
+
+    .brand {
+        margin-bottom: 28px;
+    }
+
+    h1 {
+        font-size: 27px;
+    }
+
+    .subtitle {
+        font-size: 13px;
+    }
+}

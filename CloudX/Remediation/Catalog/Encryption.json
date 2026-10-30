@@ -1,0 +1,108 @@
+[
+  {
+    "Id": "ENC-001",
+    "Name": "Key Vault HSM Key Protection",
+    "SupportedRuleIds": [
+      "KeyVaultKeyProtection"
+    ],
+    "ResourceTypes": [
+      "Microsoft.KeyVault/vaults"
+    ],
+    "Description": "The Key Vault contains a software-protected key. HSM protection requires creating or importing an HSM-backed replacement key and migrating dependent workloads.",
+    "CommandTemplate": "",
+    "RequiredParameters": [],
+    "ImpactWarning": "A software-protected key cannot simply be converted into an HSM-protected key. Key migration and dependent application updates are required. Do not delete or disable the existing key until migration is verified.",
+    "RequiresApproval": true
+  },
+  {
+    "Id": "ENC-002",
+    "Name": "SQL Server Customer-Managed Key",
+    "SupportedRuleIds": [
+      "SqlCustomerManagedKey"
+    ],
+    "ResourceTypes": [
+      "Microsoft.Sql/servers"
+    ],
+    "Description": "The Azure SQL Server does not have a customer-managed Transparent Data Encryption protector configured. Configure an existing Azure Key Vault key as the server encryption protector.",
+    "CommandTemplate": "az sql server tde-key set --server {serverName} --resource-group {resourceGroup} --server-key-type AzureKeyVault --kid {keyId}",
+    "RequiredParameters": [
+      "serverName",
+      "resourceGroup",
+      "keyId"
+    ],
+    "ImpactWarning": "The Key Vault key must already exist, and the SQL Server identity must have the required key permissions. Changing the encryption protector affects database encryption key management. Verify permissions and backup/recovery requirements before applying.",
+    "RequiresApproval": true
+  },
+  {
+    "Id": "ENC-003",
+    "Name": "SQL Database Transparent Data Encryption",
+    "SupportedRuleIds": [
+      "SqlEncryption"
+    ],
+    "ResourceTypes": [
+      "Microsoft.Sql/servers/databases"
+    ],
+    "Description": "Transparent Data Encryption is not enabled for the Azure SQL Database. Enable TDE to protect database files, backups and transaction logs at rest.",
+    "CommandTemplate": "az sql db tde set --database {databaseName} --resource-group {resourceGroup} --server {serverName} --status Enabled",
+    "RequiredParameters": [
+      "databaseName",
+      "resourceGroup",
+      "serverName"
+    ],
+    "ImpactWarning": "Verify the database and server identifiers before applying. Enabling TDE changes the database encryption configuration and may initiate encryption operations.",
+    "RequiresApproval": true
+  },
+  {
+    "Id": "ENC-004",
+    "Name": "Storage Account Customer-Managed Key",
+    "SupportedRuleIds": [
+      "StorageCustomerManagedKey"
+    ],
+    "ResourceTypes": [
+      "Microsoft.Storage/storageAccounts"
+    ],
+    "Description": "The Azure Storage Account uses Microsoft-managed encryption keys instead of a customer-managed key. Configure an existing Azure Key Vault key for storage account encryption.",
+    "CommandTemplate": "az storage account update --name {accountName} --resource-group {resourceGroup} --encryption-key-source Microsoft.Keyvault --encryption-key-vault {keyVaultUri} --encryption-key-name {keyName}",
+    "RequiredParameters": [
+      "accountName",
+      "resourceGroup",
+      "keyVaultUri",
+      "keyName"
+    ],
+    "ImpactWarning": "The Key Vault key must exist and the storage account identity must have the required permissions. Confirm identity configuration, Key Vault access and recovery arrangements before changing the encryption key source.",
+    "RequiresApproval": true
+  },
+  {
+    "Id": "ENC-005",
+    "Name": "Storage Infrastructure Encryption",
+    "SupportedRuleIds": [
+      "StorageEncryption"
+    ],
+    "ResourceTypes": [
+      "Microsoft.Storage/storageAccounts"
+    ],
+    "Description": "The Storage Account does not have infrastructure-level double encryption enabled. Azure requires this setting to be enabled when the storage account is created; it cannot be enabled on an existing account.",
+    "CommandTemplate": "",
+    "RequiredParameters": [],
+    "ImpactWarning": "There is no supported direct CLI remediation for an existing storage account. A replacement account must be planned and created with infrastructure encryption enabled, followed by a controlled data migration. Data migration can affect applications, availability and cost.",
+    "RequiresApproval": true
+  },
+  {
+    "Id": "ENC-006",
+    "Name": "Web App Minimum TLS Version",
+    "SupportedRuleIds": [
+      "WebAppTls"
+    ],
+    "ResourceTypes": [
+      "Microsoft.Web/sites"
+    ],
+    "Description": "The Azure Web App does not enforce TLS 1.2 or higher as its minimum inbound TLS version. Configure the application to require TLS 1.2.",
+    "CommandTemplate": "az webapp config set --name {appName} --resource-group {resourceGroup} --min-tls-version 1.2",
+    "RequiredParameters": [
+      "appName",
+      "resourceGroup"
+    ],
+    "ImpactWarning": "Clients using TLS 1.0 or TLS 1.1 may lose connectivity after this change. Verify application integrations and client compatibility before applying.",
+    "RequiresApproval": true
+  }
+]

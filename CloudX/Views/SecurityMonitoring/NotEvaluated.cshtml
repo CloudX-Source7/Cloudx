@@ -1,0 +1,43 @@
+﻿@model CloudX.SecurityMonitoring.UniversalRuleSupport.UniversalResultDto
+
+@{
+    ViewData["Title"] = "Security Check Not Evaluated";
+}
+
+<h1>Security Scan Result</h1>
+
+<hr />
+
+<h3>⚠️ Security Check Not Evaluated</h3>
+
+<p>
+    <strong>Rule:</strong>
+    @Model.Rule
+</p>
+
+<p>
+    <strong>Resource:</strong>
+    @(string.IsNullOrWhiteSpace(Model.ResourceName)
+        ? "Category scan"
+        : Model.ResourceName)
+</p>
+
+<p>
+    <strong>Type:</strong>
+    @Model.ResourceType
+</p>
+
+<p>
+    <strong>Status:</strong>
+    Not Evaluated
+</p>
+
+<p>
+    <strong>Reason:</strong>
+    @Model.Reason
+</p>
+
+<p>
+    <strong>Detected:</strong>
+    @Model.DetectedAt
+</p>
